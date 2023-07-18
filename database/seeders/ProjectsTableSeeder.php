@@ -7,6 +7,7 @@ use App\Models\Type;
 use Faker\Generator;
 use App\Models\Project;
 use App\Models\Technology;
+use Illuminate\Support\Str;
 use Illuminate\Database\Seeder;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
@@ -29,12 +30,14 @@ class ProjectsTableSeeder extends Seeder
 
             $title = $faker->words(rand(2, 10), true);
             $slug = Project::slugger($title);
+            $imageIndex = rand(0, 9);
 
             $project = Project::create([
 
                 'type_id' => $faker->randomElement($types)->id,
-                'title' => $title,
+                'title' => Str::ucfirst($title),
                 'slug' => $slug,
+                'image' => $imageIndex ? 'uploads/avatar' . $imageIndex . '.jpg' : null,
                 'description' => $faker->paragraphs(rand(2, 5), true),
                 'repo' => $faker->words(rand(2, 10), true),
 
